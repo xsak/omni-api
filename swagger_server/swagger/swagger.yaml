@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  title: omni API
+  description: The best description ever.
+  contact:
+    name: Akos Keresztes
+    email: xsak@c2.hu
+  version: "0.1"
+servers:
+- url: http://localhost:8080
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: planet
+  description: This is a planet.
+- name: info
+paths:
+  /create:
+    post:
+      tags:
+      - planet
+      summary: Create a new planet
+      description: Create new planet object
+      operationId: create_post
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: '{"planets" : "Valami"}'
+      responses:
+        "200":
+          description: OK
+      x-openapi-router-controller: swagger_server.controllers.planet_controller
+  /alma:
+    post:
+      tags:
+      - planet
+      summary: Create a new planet
+      description: Create new planet object
+      operationId: alma_fun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rekettye'
+      responses:
+        "200":
+          description: OK
+      x-openapi-router-controller: swagger_server.controllers.planet_controller
+  /planet:
+    get:
+      tags:
+      - info
+      description: Get planet info
+      operationId: planet_get
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiresponse'
+              example: '{"planets":"Rekettye"}'
+      x-openapi-router-controller: swagger_server.controllers.info_controller
+components:
+  schemas:
+    rekettye:
+      required:
+      - alma
+      properties:
+        alma:
+          type: string
+    apiresponse:
+      required:
+      - szam
+      type: object
+      properties:
+        forras:
+          type: string
+        szam:
+          type: integer
+          format: int32
+      example:
+        szam: 0
+        forras: forras
+
